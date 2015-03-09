@@ -30,6 +30,11 @@ class View {
 	public JButton otherStyle1;
 	public JButton otherStyle2;
 
+	public JButton fabricArrowRight;
+	public JButton fabricArrowLeft;
+	public JButton patternArrowRight;
+	public JButton patternArrowLeft;
+
 	public JSlider colorSlider;
 
 	private ImageIcon editingIcon;
@@ -82,14 +87,12 @@ class View {
 		String imagePath = new String("src/images/right-button.png");
 
 		// Create arrow button from the image
-		JButton right = new JButton(new ImageIcon(imagePath));
-		JButton left = new JButton(new MirrorImageIcon(imagePath));
+		fabricArrowRight = new JButton(new ImageIcon(imagePath));
+		fabricArrowLeft = new JButton(new MirrorImageIcon(imagePath));
 
 		// Turn off the default border and fill
-		left.setBorder(BorderFactory.createEmptyBorder());
-		left.setContentAreaFilled(false);
-		right.setBorder(BorderFactory.createEmptyBorder());
-		right.setContentAreaFilled(false);
+		disableDefaultEffects(fabricArrowRight);
+		disableDefaultEffects(fabricArrowLeft);
 
 		JPanel selector = new JPanel();		
 		BoxLayout layout = new BoxLayout(selector, BoxLayout.X_AXIS);
@@ -101,11 +104,11 @@ class View {
 		int x = 27;
 		int y = 0;
 		selector.add(Box.createRigidArea(new Dimension(44, 0)));
-		selector.add(left);
+		selector.add(fabricArrowLeft);
 		selector.add(Box.createRigidArea(new Dimension(x,y)));
 		selector.add(pattern);
 		selector.add(Box.createRigidArea(new Dimension(x,y)));
-		selector.add(right);
+		selector.add(fabricArrowRight);
 
 		selector.setBackground(Color.BLACK);
 
@@ -128,21 +131,19 @@ class View {
 		imagePath = new String("src/images/right-button.png");
 
 		// Create new buttons
-		right = new JButton(new ImageIcon(imagePath));
-		left = new JButton(new MirrorImageIcon(imagePath));
+		patternArrowRight = new JButton(new ImageIcon(imagePath));
+		patternArrowLeft = new JButton(new MirrorImageIcon(imagePath));
 
 		// Turn off the default border and fill
-		left.setBorder(BorderFactory.createEmptyBorder());
-		left.setContentAreaFilled(false);
-		right.setBorder(BorderFactory.createEmptyBorder());
-		right.setContentAreaFilled(false);
+		disableDefaultEffects(patternArrowRight);
+		disableDefaultEffects(patternArrowLeft);
 
 		selector2.add(Box.createRigidArea(new Dimension(44, 0)));
-		selector2.add(left);
+		selector2.add(patternArrowLeft);
 		selector2.add(Box.createRigidArea(new Dimension(x,y)));
 		selector2.add(pattern);
 		selector2.add(Box.createRigidArea(new Dimension(x,y)));
-		selector2.add(right);
+		selector2.add(patternArrowRight);
 
 
 		selector2.setBackground(Color.BLACK);

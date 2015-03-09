@@ -47,6 +47,10 @@ class Controller {
 		view.otherStyle1.addActionListener(new Style1Listener());
 		view.otherStyle2.addActionListener(new Style2Listener());
 		view.colorSlider.addChangeListener(new ColorSliderListener());
+		view.fabricArrowLeft.addActionListener(new FabricListenerLeft());
+		view.fabricArrowRight.addActionListener(new FabricListenerRight());
+		view.patternArrowLeft.addActionListener(new PatternListenerLeft());
+		view.patternArrowRight.addActionListener(new PatternListenerRight());
 	}
 
 	/**
@@ -72,7 +76,6 @@ class Controller {
 		);
 	}
 
-
 	public class Style1Listener implements ActionListener { 
 		public void actionPerformed(ActionEvent e) {
 			view.switchToOtherStyle1();
@@ -93,6 +96,59 @@ class Controller {
 			type = other2;
 			other2 = temp;
 
+			updateEditing();
+		}
+	}
+
+	public class FabricListenerLeft implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			int fabricIndex = model.fabrics.indexOf(fabric);
+			if (fabricIndex == 0) {
+				fabric = model.fabrics.get(model.fabrics.size()-1);
+			}
+			else {
+				fabric = model.fabrics.get(fabricIndex-1);
+			}
+			updateEditing();
+		}
+	}
+
+	public class FabricListenerRight implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			int fabricIndex = model.fabrics.indexOf(fabric);
+			if (fabricIndex+1 == model.fabrics.size()) {
+				fabric = model.fabrics.get(0);
+			}
+			else {
+				fabric = model.fabrics.get(fabricIndex+1);
+			}
+			updateEditing();
+		}
+	}
+
+
+	public class PatternListenerLeft implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			int patternIndex = model.patterns.indexOf(pattern);
+			if (patternIndex == 0) {
+				pattern = model.patterns.get(model.patterns.size()-1);
+			}
+			else {
+				pattern = model.patterns.get(patternIndex-1);
+			}
+			updateEditing();
+		}
+	}
+
+	public class PatternListenerRight implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			int patternIndex = model.patterns.indexOf(pattern);
+			if (patternIndex+1 == model.patterns.size()) {
+				pattern = model.patterns.get(0);
+			}
+			else {
+				pattern = model.patterns.get(patternIndex+1);
+			}
 			updateEditing();
 		}
 	}
