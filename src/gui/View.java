@@ -17,16 +17,50 @@ import javax.swing.Box;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JSlider;
+import java.util.List;
+import javax.swing.Icon;
 
-class Main {
-	public static void main(String[] args) {
-		// Create the frame
-		JFrame frame = new JFrame( "SmartClothing.com" );
+class View {
+
+	private JFrame frame;
+
+	private JLabel editing;
+	private JButton otherStyle1;
+	private JButton otherStyle2;
+
+	private ImageIcon editingIcon;
+	private ImageIcon otherStyle1Icon;
+	private ImageIcon otherStyle2Icon;
+
+	public void disableDefaultEffects(JButton b) {
+		b.setBorder(BorderFactory.createEmptyBorder());
+		b.setContentAreaFilled(false);
+	}
+
+	private void updateIcons() {
+		editing = new JLabel(editingIcon);
+		otherStyle1 = new JButton(otherStyle1Icon);
+		otherStyle2 = new JButton(otherStyle2Icon);
+	}
+
+	public View() {
+
+		// Initialize the shirt style icons
+		editingIcon = new ImageIcon("src/images/button-icon.png");
+		otherStyle1Icon = new ImageIcon("src/images/polo-icon.png");
+		otherStyle2Icon = new ImageIcon("src/images/v-neck-icon.png");
+		updateIcons();
+
+		// Disable default effects
+		disableDefaultEffects(otherStyle1);
+		disableDefaultEffects(otherStyle2);
+
+		// Create and title the main application frame
+		this.frame = new JFrame( "SmartClothing.com" );
 
 		// Exit the program when user closes the frame
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		
-		
+
 		frame.setLayout( new BorderLayout() );
 
 		// Create the left panel button groups
@@ -111,8 +145,7 @@ class Main {
 		frame.add(leftContainer, BorderLayout.WEST);
 
 		// Setup the main clothing image area
-		imagePath = new String("src/images/button-red.jpg");
-		frame.add(new JLabel(new ImageIcon(imagePath)));
+		frame.add(this.editing);
 
 		// Setup the clothing icon area
 
@@ -122,19 +155,9 @@ class Main {
 
 		rightContainer.add(Box.createVerticalGlue());
 
-		imagePath = new String("src/images/polo-icon.png");
-		JButton polo = new JButton(new ImageIcon(imagePath));
-		polo.setBorder(BorderFactory.createEmptyBorder());
-		polo.setContentAreaFilled(false);
-		rightContainer.add(polo);
-
+		rightContainer.add(this.otherStyle1);
 		rightContainer.add(Box.createRigidArea(new Dimension(0, 31)));
-
-		imagePath = new String("src/images/v-neck-icon.png");
-		JButton vNeck = new JButton(new ImageIcon(imagePath));
-		vNeck.setBorder(BorderFactory.createEmptyBorder());
-		vNeck.setContentAreaFilled(false);
-		rightContainer.add(vNeck);
+		rightContainer.add(this.otherStyle2);
 
 		rightContainer.add(Box.createVerticalGlue());
 
@@ -142,10 +165,40 @@ class Main {
 
 		frame.add(rightContainer, BorderLayout.EAST);
 
+		// Pack and show the main frame
 		frame.pack();
 		frame.setVisible(true);
-
 	}
 
-	// private createButtonGroup( String label, )
+	public void update() {
+		frame.pack();
+	}
+
+	// Setters
+
+	public void setEditing(Icon shirt) {
+		editing.setIcon(shirt);
+	}
+
+	public void setOtherStyle1(Icon shirt) {
+		otherStyle1.setIcon(shirt);
+	}
+
+	public void setOtherStyle2(Icon shirt) {
+		otherStyle2.setIcon(shirt);
+	}
+
+	// Getters
+
+	public Icon getEditable() {
+		return editing.getIcon();
+	}
+
+	public Icon getOtherStyle1() {
+		return otherStyle1.getIcon();
+	}
+
+	public Icon getOtherStyle2() {
+		return otherStyle2.getIcon();
+	}
 }
