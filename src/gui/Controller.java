@@ -109,6 +109,7 @@ class Controller {
 			else {
 				fabric = model.fabrics.get(fabricIndex-1);
 			}
+			view.setFabric(fabric);
 			updateEditing();
 		}
 	}
@@ -122,6 +123,7 @@ class Controller {
 			else {
 				fabric = model.fabrics.get(fabricIndex+1);
 			}
+			view.setFabric(fabric);
 			updateEditing();
 		}
 	}
@@ -136,6 +138,7 @@ class Controller {
 			else {
 				pattern = model.patterns.get(patternIndex-1);
 			}
+			view.setPattern(pattern);
 			updateEditing();
 		}
 	}
@@ -149,6 +152,7 @@ class Controller {
 			else {
 				pattern = model.patterns.get(patternIndex+1);
 			}
+			view.setPattern(pattern);
 			updateEditing();
 		}
 	}

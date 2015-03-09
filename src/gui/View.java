@@ -30,8 +30,10 @@ class View {
 	public JButton otherStyle1;
 	public JButton otherStyle2;
 
+	public JLabel fabric;
 	public JButton fabricArrowRight;
 	public JButton fabricArrowLeft;
+	public JLabel pattern;
 	public JButton patternArrowRight;
 	public JButton patternArrowLeft;
 
@@ -46,10 +48,10 @@ class View {
 	public String otherStyle2Type;
 
 	public ImageIcon plain;
-	public ImageIcon dot;
-	public ImageIcon stripes;
 	public ImageIcon diag;
 	public ImageIcon weave;
+	public ImageIcon dots;
+	public ImageIcon stripes;
 
 	public void disableDefaultEffects(JButton b) {
 		b.setBorder(BorderFactory.createEmptyBorder());
@@ -66,7 +68,7 @@ class View {
 
 		String loc = "src/images/";
 		plain = new ImageIcon(loc+"plain.png");
-		dot = new ImageIcon(loc+"polka-dot.jpg");
+		dots = new ImageIcon(loc+"polka-dot.jpg");
 		stripes = new ImageIcon(loc+"stripes.png");
 		diag = new ImageIcon(loc+"diag.jpg");
 		weave = new ImageIcon(loc+"weave.png");
@@ -97,9 +99,9 @@ class View {
 		// Create the left panel button groups
 		JLabel label = new JLabel("Fabric");
 
-		String imagePath = new String("src/images/right-button.png");
 
 		// Create arrow button from the image
+		String imagePath = new String("src/images/right-button.png");
 		fabricArrowRight = new JButton(new ImageIcon(imagePath));
 		fabricArrowLeft = new JButton(new MirrorImageIcon(imagePath));
 
@@ -111,14 +113,14 @@ class View {
 		BoxLayout layout = new BoxLayout(selector, BoxLayout.X_AXIS);
 		selector.setLayout(layout);
 
-		JLabel pattern = new JLabel(plain);
+		fabric = new JLabel(plain);
 
 		int x = 27;
 		int y = 0;
 		selector.add(Box.createRigidArea(new Dimension(44, 0)));
 		selector.add(fabricArrowLeft);
 		selector.add(Box.createRigidArea(new Dimension(x,y)));
-		selector.add(pattern);
+		selector.add(fabric);
 		selector.add(Box.createRigidArea(new Dimension(x,y)));
 		selector.add(fabricArrowRight);
 
@@ -247,6 +249,30 @@ class View {
 	public void setOtherStyle2Icon(ImageIcon shirt) {
 		otherStyle2Icon = shirt;
 		setOtherStyle2(shirt);
+	}
+
+	public void setFabric(String f) {
+		if ("weave".equals(f)) {
+			fabric.setIcon(weave);
+		}
+		else if ("diag".equals(f)) {
+			fabric.setIcon(diag);
+		}
+		else {
+			fabric.setIcon(plain);
+		}
+	}
+
+	public void setPattern(String p) {
+		if ("dots".equals(p)) {
+			pattern.setIcon(dots);
+		}
+		else if ("stripes".equals(p)) {
+			pattern.setIcon(stripes);
+		}
+		else {
+			pattern.setIcon(plain);
+		}
 	}
 
 	// Getters
