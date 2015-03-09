@@ -10,6 +10,14 @@ class Controller {
 	private Model model;
 	private View view;
 
+	private String type;
+	private String color;
+	private String pattern;
+	private String fabric;
+
+	private String other1;
+	private String other2;
+
 	/**
 	 * Controller constructor
 	 */
@@ -17,18 +25,14 @@ class Controller {
 	{
 		this.model = model;
 		this.view = view;
-	}
 
-	public void switchToOtherStyle1() {
-		ImageIcon temp = view.getEditingIcon();
-		view.setEditingIcon(view.getOtherStyle1Icon());
-		view.setOtherStyle1Icon(temp);
-	}
+		type = new String("button");
+		color = new String("red");
+		pattern = new String("plain");
+		fabric = new String("plain");
 
-	public void switchToOtherStyle2() {
-		ImageIcon temp = view.getEditingIcon();
-		view.setEditingIcon(view.getOtherStyle2Icon());
-		view.setOtherStyle2Icon(temp);
+		other1 = new String("polo");
+		other2 = new String("v-neck");
 	}
 
 	public void setEditing(ImageIcon shirt) {
@@ -49,20 +53,43 @@ class Controller {
 		Model model = new Model();
 		View view = new View();
 		Controller controller = new Controller(model, view);
-		controller.setEditing(model.getShirtOrNull("button-red"));
+		controller.setEditing(model.getShirtOrNull("button-red-plain-plain"));
 		controller.addListeners();
+	}
+
+	public void updateEditing() {
+		setEditing(
+			model.getShirtOrNull(
+				type + "-"
+				+ color + "-"
+				+ pattern + "-"
+				+ fabric
+			)
+		);
 	}
 
 
 	public class Style1Listener implements ActionListener { 
 		public void actionPerformed(ActionEvent e) {
-			switchToOtherStyle1();
+			view.switchToOtherStyle1();
+
+			String temp = type;
+			type = other1;
+			other1 = temp;
+
+			updateEditing();
 		}
 	}
 
 	public class Style2Listener implements ActionListener { 
 		public void actionPerformed(ActionEvent e) {
-			switchToOtherStyle2();
+			view.switchToOtherStyle2();
+
+			String temp = type;
+			type = other2;
+			other2 = temp;
+
+			updateEditing();
 		}
 	}
 }

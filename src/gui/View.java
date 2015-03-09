@@ -19,6 +19,8 @@ import java.awt.Dimension;
 import javax.swing.JSlider;
 import java.util.List;
 import javax.swing.Icon;
+import javax.swing.JSlider;
+import java.util.Hashtable;
 
 class View {
 
@@ -31,6 +33,10 @@ class View {
 	private ImageIcon editingIcon;
 	private ImageIcon otherStyle1Icon;
 	private ImageIcon otherStyle2Icon;
+
+	public String editingType;
+	public String otherStyle1Type; 
+	public String otherStyle2Type;
 
 	public void disableDefaultEffects(JButton b) {
 		b.setBorder(BorderFactory.createEmptyBorder());
@@ -50,6 +56,11 @@ class View {
 		otherStyle1Icon = new ImageIcon("src/images/polo-icon.png");
 		otherStyle2Icon = new ImageIcon("src/images/v-neck-icon.png");
 		updateIcons();
+
+		// Set the types based on the above order
+		editingType = new String("button");
+		otherStyle1Type = new String("polo");
+		otherStyle2Type = new String("v-neck");
 
 		// Disable default effects
 		disableDefaultEffects(otherStyle1);
@@ -145,7 +156,28 @@ class View {
 		frame.add(leftContainer, BorderLayout.WEST);
 
 		// Setup the main clothing image area
-		frame.add(this.editing);
+		JPanel centerContainer = new JPanel(new BorderLayout());
+		centerContainer.add(editing, BorderLayout.CENTER);
+
+		// Add the color slider on the bottom of the screen
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 4, 2);
+		slider.setSnapToTicks(true);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		slider.setMajorTickSpacing(1);
+		slider.setMinorTickSpacing(1);
+		centerContainer.add(slider, BorderLayout.SOUTH);
+
+		//Create the label table
+		Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
+		labelTable.put( new Integer( 0 ), new JLabel("purple") );
+		labelTable.put( new Integer( 1 ), new JLabel("white") );
+		labelTable.put( new Integer( 2 ), new JLabel("red") );
+		labelTable.put( new Integer( 3 ), new JLabel("blue") );
+		labelTable.put( new Integer( 4 ), new JLabel("yellow") );
+		slider.setLabelTable( labelTable );
+
+		frame.add(centerContainer);
 
 		// Setup the clothing icon area
 
@@ -227,4 +259,26 @@ class View {
 	public ImageIcon getOtherStyle2Icon() {
 		return otherStyle2Icon;
 	}
+
+	// Idk if we still need that shit aboooove lol
+	public void switchToOtherStyle1() {
+		ImageIcon temp = getEditingIcon();
+		setEditingIcon(getOtherStyle1Icon());
+		setOtherStyle1Icon(temp);
+
+		// Change the editing to be one of the other style shirts
+		String tempString = editingType;
+		editingType = otherStyle1Type;
+		otherStyle1Type = tempString;
+	}
+
+	public void switchToOtherStyle2() {
+		ImageIcon temp = getEditingIcon();
+		setEditingIcon(getOtherStyle2Icon());
+		setOtherStyle2Icon(temp);
+
+		// Change the editing to be one of the other style shirts
+		String tempString = editingType;
+		editingType = otherStyle2Type;
+		otherStyle2Type = tempString;	}
 }
