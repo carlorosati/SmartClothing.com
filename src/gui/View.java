@@ -24,9 +24,9 @@ class View {
 
 	private JFrame frame;
 
-	private JLabel editing;
-	private JButton otherStyle1;
-	private JButton otherStyle2;
+	public JLabel editing;
+	public JButton otherStyle1;
+	public JButton otherStyle2;
 
 	private ImageIcon editingIcon;
 	private ImageIcon otherStyle1Icon;
@@ -188,9 +188,23 @@ class View {
 		otherStyle2.setIcon(shirt);
 	}
 
+	public void setEditingIcon(ImageIcon shirt) {
+		editingIcon = shirt;
+	}
+
+	public void setOtherStyle1Icon(ImageIcon shirt) {
+		otherStyle1Icon = shirt;
+		setOtherStyle1(shirt);
+	}
+
+	public void setOtherStyle2Icon(ImageIcon shirt) {
+		otherStyle2Icon = shirt;
+		setOtherStyle2(shirt);
+	}
+
 	// Getters
 
-	public Icon getEditable() {
+	public Icon getEditing() {
 		return editing.getIcon();
 	}
 
@@ -200,5 +214,17 @@ class View {
 
 	public Icon getOtherStyle2() {
 		return otherStyle2.getIcon();
+	}
+
+	public ImageIcon getEditingIcon() {
+		return editingIcon;
+	}
+
+	public ImageIcon getOtherStyle1Icon() {
+		return otherStyle1Icon;
+	}
+
+	public ImageIcon getOtherStyle2Icon() {
+		return otherStyle2Icon;
 	}
 }
