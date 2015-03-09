@@ -30,6 +30,8 @@ class View {
 	public JButton otherStyle1;
 	public JButton otherStyle2;
 
+	public JSlider colorSlider;
+
 	private ImageIcon editingIcon;
 	private ImageIcon otherStyle1Icon;
 	private ImageIcon otherStyle2Icon;
@@ -160,13 +162,13 @@ class View {
 		centerContainer.add(editing, BorderLayout.CENTER);
 
 		// Add the color slider on the bottom of the screen
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 4, 2);
-		slider.setSnapToTicks(true);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.setMajorTickSpacing(1);
-		slider.setMinorTickSpacing(1);
-		centerContainer.add(slider, BorderLayout.SOUTH);
+		colorSlider = new JSlider(JSlider.HORIZONTAL, 0, 4, 2);
+		colorSlider.setSnapToTicks(true);
+		colorSlider.setPaintTicks(true);
+		colorSlider.setPaintLabels(true);
+		colorSlider.setMajorTickSpacing(1);
+		colorSlider.setMinorTickSpacing(1);
+		centerContainer.add(colorSlider, BorderLayout.SOUTH);
 
 		//Create the label table
 		Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
@@ -175,7 +177,7 @@ class View {
 		labelTable.put( new Integer( 2 ), new JLabel("red") );
 		labelTable.put( new Integer( 3 ), new JLabel("blue") );
 		labelTable.put( new Integer( 4 ), new JLabel("yellow") );
-		slider.setLabelTable( labelTable );
+		colorSlider.setLabelTable( labelTable );
 
 		frame.add(centerContainer);
 

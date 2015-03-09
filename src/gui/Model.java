@@ -11,10 +11,10 @@ class Model {
 	private Map<String,ImageIcon> shirts;
 	private String loc;
 
-	List<String> colors;
-	List<String> patterns;
-	List<String> fabrics;
-	List<String> types;
+	public List<String> colors;
+	public List<String> patterns;
+	public List<String> fabrics;
+	public List<String> types;
 
 	public Model()
 	{

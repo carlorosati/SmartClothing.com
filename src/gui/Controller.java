@@ -4,6 +4,9 @@ import javax.swing.ImageIcon;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.JSlider;
 
 class Controller {
 
@@ -43,6 +46,7 @@ class Controller {
 	public void addListeners() {
 		view.otherStyle1.addActionListener(new Style1Listener());
 		view.otherStyle2.addActionListener(new Style2Listener());
+		view.colorSlider.addChangeListener(new ColorSliderListener());
 	}
 
 	/**
@@ -90,6 +94,17 @@ class Controller {
 			other2 = temp;
 
 			updateEditing();
+		}
+	}
+
+	public class ColorSliderListener implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			JSlider source = (JSlider) e.getSource();
+			if (!source.getValueIsAdjusting()) {
+				int colorIndex = (int) source.getValue();
+				color = model.colors.get(colorIndex);
+				updateEditing();
+			}
 		}
 	}
 }
