@@ -45,6 +45,12 @@ class View {
 	public String otherStyle1Type; 
 	public String otherStyle2Type;
 
+	public ImageIcon plain;
+	public ImageIcon dot;
+	public ImageIcon stripes;
+	public ImageIcon diag;
+	public ImageIcon weave;
+
 	public void disableDefaultEffects(JButton b) {
 		b.setBorder(BorderFactory.createEmptyBorder());
 		b.setContentAreaFilled(false);
@@ -57,6 +63,13 @@ class View {
 	}
 
 	public View() {
+
+		String loc = "src/images/";
+		plain = new ImageIcon(loc+"plain.png");
+		dot = new ImageIcon(loc+"polka-dot.jpg");
+		stripes = new ImageIcon(loc+"stripes.png");
+		diag = new ImageIcon(loc+"diag.jpg");
+		weave = new ImageIcon(loc+"weave.png");
 
 		// Initialize the shirt style icons
 		editingIcon = new ImageIcon("src/images/button-icon.png");
@@ -98,8 +111,7 @@ class View {
 		BoxLayout layout = new BoxLayout(selector, BoxLayout.X_AXIS);
 		selector.setLayout(layout);
 
-		imagePath = new String("src/images/polka-dot.jpg");
-		JLabel pattern = new JLabel(new ImageIcon(imagePath));
+		JLabel pattern = new JLabel(plain);
 
 		int x = 27;
 		int y = 0;
@@ -127,7 +139,7 @@ class View {
 		layout = new BoxLayout(selector2, BoxLayout.X_AXIS);
 		selector2.setLayout(layout);
 
-		pattern = new JLabel(new ImageIcon(imagePath));
+		pattern = new JLabel(plain);
 		imagePath = new String("src/images/right-button.png");
 
 		// Create new buttons
