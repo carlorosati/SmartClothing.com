@@ -22,6 +22,8 @@ import javax.swing.Icon;
 import javax.swing.JSlider;
 import java.util.Hashtable;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 class View {
 
@@ -53,6 +55,10 @@ class View {
 	public ImageIcon weave;
 	public ImageIcon dots;
 	public ImageIcon stripes;
+	public ImageIcon rightArrowIcon;
+	public ImageIcon leftArrowIcon;
+	public ImageIcon rightArrowHoverIcon;
+	public ImageIcon leftArrowHoverIcon;
 
 	public void disableDefaultEffects(JButton b) {
 		b.setBorder(BorderFactory.createEmptyBorder());
@@ -74,6 +80,10 @@ class View {
 		stripes = new ImageIcon(loc+"stripes.png");
 		diag = new ImageIcon(loc+"diag.jpg");
 		weave = new ImageIcon(loc+"weave.png");
+		rightArrowIcon = new ImageIcon(loc+"right-button.png");
+		leftArrowIcon = new MirrorImageIcon(loc+"right-button.png");
+		rightArrowHoverIcon = new ImageIcon(loc+"right-button-hover.png");
+		leftArrowHoverIcon = new MirrorImageIcon(loc+"right-button-hover.png");
 
 		// Initialize the shirt style icons
 		editingIcon = new ImageIcon("src/images/button-icon.png");
@@ -100,19 +110,24 @@ class View {
 		frame.setLayout(new BorderLayout());
 
 		// Create arrow buttons and display for the fabric button group
-		String imagePath = new String("src/images/right-button.png");
-		fabricArrowRight = new JButton(new ImageIcon(imagePath));
-		fabricArrowLeft = new JButton(new MirrorImageIcon(imagePath));
+		fabricArrowRight = new JButton(rightArrowIcon);
+		fabricArrowLeft = new JButton(leftArrowIcon);
 
 		// Create arrow buttons and display for the pattern button group
-		patternArrowRight = new JButton(new ImageIcon(imagePath));
-		patternArrowLeft = new JButton(new MirrorImageIcon(imagePath));
+		patternArrowRight = new JButton(rightArrowIcon);
+		patternArrowLeft = new JButton(leftArrowIcon);
 
 		// Turn off the default borders and fills
 		disableDefaultEffects(fabricArrowRight);
 		disableDefaultEffects(fabricArrowLeft);
 		disableDefaultEffects(patternArrowRight);
 		disableDefaultEffects(patternArrowLeft);
+
+		// Add hover effects to the arrows
+		fabricArrowLeft.addMouseListener(new LeftArrowHover());
+		patternArrowLeft.addMouseListener(new LeftArrowHover());
+		fabricArrowRight.addMouseListener(new RightArrowHover());
+		patternArrowRight.addMouseListener(new RightArrowHover());
 
 		// Create the left hand side container
 		JPanel leftContainer = new JPanel();
@@ -360,5 +375,30 @@ class View {
 		// Change the editing to be one of the other style shirts
 		String tempString = editingType;
 		editingType = otherStyle2Type;
-		otherStyle2Type = tempString;	}
+		otherStyle2Type = tempString;
+	}
+
+	private class RightArrowHover extends MouseAdapter {
+		public void mouseEntered(MouseEvent e) {
+			JButton b = (JButton) e.getComponent();
+		    b.setIcon(rightArrowHoverIcon);
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JButton b = (JButton) e.getComponent();
+		    b.setIcon(rightArrowIcon);
+		}
+	}
+
+	private class LeftArrowHover extends MouseAdapter {
+		public void mouseEntered(MouseEvent e) {
+			JButton b = (JButton) e.getComponent();
+		    b.setIcon(leftArrowHoverIcon);
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JButton b = (JButton) e.getComponent();
+		    b.setIcon(leftArrowIcon);
+		}
+	}
 }
