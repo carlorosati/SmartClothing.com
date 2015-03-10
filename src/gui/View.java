@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JSlider;
 import java.util.Hashtable;
+import javax.swing.SwingConstants;
 
 class View {
 
@@ -66,6 +67,7 @@ class View {
 
 	public View() {
 
+		// Load in the icon images
 		String loc = "src/images/";
 		plain = new ImageIcon(loc+"plain.png");
 		dots = new ImageIcon(loc+"polka-dot.jpg");
@@ -94,52 +96,29 @@ class View {
 		// Exit the program when user closes the frame
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 
-		frame.setLayout( new BorderLayout() );
+		// Set the layout
+		frame.setLayout(new BorderLayout());
 
-		// Create the left panel button groups
-		JLabel label = new JLabel("Fabric");
-
-
-		// Create arrow button from the image
+		// Create arrow buttons and display for the fabric button group
 		String imagePath = new String("src/images/right-button.png");
 		fabricArrowRight = new JButton(new ImageIcon(imagePath));
 		fabricArrowLeft = new JButton(new MirrorImageIcon(imagePath));
+		fabric = new JLabel(plain);
 
-		// Turn off the default border and fill
+		// Turn off the default borders and fills
 		disableDefaultEffects(fabricArrowRight);
 		disableDefaultEffects(fabricArrowLeft);
 
-		JPanel selector = new JPanel();		
-		BoxLayout layout = new BoxLayout(selector, BoxLayout.X_AXIS);
-		selector.setLayout(layout);
-
-		fabric = new JLabel(plain);
-
-		int x = 27;
-		int y = 0;
-		selector.add(Box.createRigidArea(new Dimension(44, 0)));
-		selector.add(fabricArrowLeft);
-		selector.add(Box.createRigidArea(new Dimension(x,y)));
-		selector.add(fabric);
-		selector.add(Box.createRigidArea(new Dimension(x,y)));
-		selector.add(fabricArrowRight);
-
-		selector.setBackground(Color.BLACK);
-
 		// Create the left hand side container
 		JPanel leftContainer = new JPanel();
-		layout = new BoxLayout(leftContainer, BoxLayout.Y_AXIS);
+		BoxLayout layout = new BoxLayout(leftContainer, BoxLayout.Y_AXIS);
 		leftContainer.setLayout(layout);
 
 		leftContainer.add(Box.createVerticalGlue());
-		JLabel fabricLabel = new JLabel("Fabric");
-		fabricLabel.setForeground(Color.WHITE);
-		leftContainer.add(fabricLabel);
-		leftContainer.add(selector);
 
-		JPanel selector2 = new JPanel();
-		layout = new BoxLayout(selector2, BoxLayout.X_AXIS);
-		selector2.setLayout(layout);
+		leftContainer.add(newCenteredText("Fabric"));
+
+		leftContainer.add(newSelectorPanel(fabricArrowLeft, fabric, fabricArrowRight));
 
 		pattern = new JLabel(plain);
 		imagePath = new String("src/images/right-button.png");
@@ -152,21 +131,9 @@ class View {
 		disableDefaultEffects(patternArrowRight);
 		disableDefaultEffects(patternArrowLeft);
 
-		selector2.add(Box.createRigidArea(new Dimension(44, 0)));
-		selector2.add(patternArrowLeft);
-		selector2.add(Box.createRigidArea(new Dimension(x,y)));
-		selector2.add(pattern);
-		selector2.add(Box.createRigidArea(new Dimension(x,y)));
-		selector2.add(patternArrowRight);
-
-
-		selector2.setBackground(Color.BLACK);
-
 		leftContainer.add(Box.createRigidArea(new Dimension(0, 36)));
-		JLabel patternLabel = new JLabel("Pattern");
-		patternLabel.setForeground(Color.WHITE);
-		leftContainer.add(patternLabel);
-		leftContainer.add(selector2);
+		leftContainer.add(newCenteredText("Pattern"));
+		leftContainer.add(newSelectorPanel(patternArrowLeft, pattern, patternArrowRight));
 		leftContainer.add(Box.createVerticalGlue());
 
 		leftContainer.setBackground(Color.BLACK);
@@ -221,6 +188,55 @@ class View {
 
 	public void update() {
 		frame.pack();
+	}
+
+	public JPanel newSelectorPanel(
+		JButton leftArrow,
+		JLabel display,
+		JButton rightArrow
+	) {
+		// Create the panel with a horizontal box layout
+		JPanel selectorPanel = new JPanel();		
+		BoxLayout layout = new BoxLayout(selectorPanel, BoxLayout.X_AXIS);
+		selectorPanel.setLayout(layout);
+
+		int outerDistance = 37;
+		int innerDistance = 27;
+		int y = 0;
+
+		// Add the panels with spacing
+		selectorPanel.add(Box.createRigidArea(new Dimension(outerDistance, y)));
+		selectorPanel.add(leftArrow);
+		selectorPanel.add(Box.createRigidArea(new Dimension(innerDistance,y)));
+		selectorPanel.add(display);
+		selectorPanel.add(Box.createRigidArea(new Dimension(innerDistance,y)));
+		selectorPanel.add(rightArrow);
+		selectorPanel.add(Box.createRigidArea(new Dimension(outerDistance,y)));
+
+		// Set background to black
+		selectorPanel.setBackground(Color.BLACK);
+
+		return selectorPanel;
+	}
+
+	public JPanel newCenteredText(String text) {
+		// Create the text label
+		JLabel fabricLabel = new JLabel(text, SwingConstants.CENTER);
+		fabricLabel.setForeground(Color.WHITE);
+
+		// Create the panel to hold the text
+		JPanel panel = new JPanel();
+		BoxLayout layout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		panel.setLayout(layout);
+
+		// Add the label and surround it with horizontal glue
+		panel.add(Box.createHorizontalGlue());
+		panel.add(fabricLabel, BorderLayout.CENTER);
+		panel.add(Box.createHorizontalGlue());
+
+		// Set the background color to black
+		panel.setBackground(Color.BLACK);
+		return panel;
 	}
 
 	// Setters
