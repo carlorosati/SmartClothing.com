@@ -103,40 +103,39 @@ class View {
 		String imagePath = new String("src/images/right-button.png");
 		fabricArrowRight = new JButton(new ImageIcon(imagePath));
 		fabricArrowLeft = new JButton(new MirrorImageIcon(imagePath));
-		fabric = new JLabel(plain);
+
+		// Create arrow buttons and display for the pattern button group
+		patternArrowRight = new JButton(new ImageIcon(imagePath));
+		patternArrowLeft = new JButton(new MirrorImageIcon(imagePath));
 
 		// Turn off the default borders and fills
 		disableDefaultEffects(fabricArrowRight);
 		disableDefaultEffects(fabricArrowLeft);
+		disableDefaultEffects(patternArrowRight);
+		disableDefaultEffects(patternArrowLeft);
 
 		// Create the left hand side container
 		JPanel leftContainer = new JPanel();
 		BoxLayout layout = new BoxLayout(leftContainer, BoxLayout.Y_AXIS);
+		leftContainer.setBackground(Color.BLACK);
 		leftContainer.setLayout(layout);
-
 		leftContainer.add(Box.createVerticalGlue());
 
+		// Add the fabric selector group
+		fabric = new JLabel(plain);
 		leftContainer.add(newCenteredText("Fabric"));
-
 		leftContainer.add(newSelectorPanel(fabricArrowLeft, fabric, fabricArrowRight));
 
+		// Add vertical spacing between the panels
+		leftContainer.add(Box.createRigidArea(new Dimension(0, 42)));
+
+		// Add the pattern selector group
 		pattern = new JLabel(plain);
-		imagePath = new String("src/images/right-button.png");
-
-		// Create new buttons
-		patternArrowRight = new JButton(new ImageIcon(imagePath));
-		patternArrowLeft = new JButton(new MirrorImageIcon(imagePath));
-
-		// Turn off the default border and fill
-		disableDefaultEffects(patternArrowRight);
-		disableDefaultEffects(patternArrowLeft);
-
-		leftContainer.add(Box.createRigidArea(new Dimension(0, 36)));
 		leftContainer.add(newCenteredText("Pattern"));
 		leftContainer.add(newSelectorPanel(patternArrowLeft, pattern, patternArrowRight));
-		leftContainer.add(Box.createVerticalGlue());
 
-		leftContainer.setBackground(Color.BLACK);
+		// Add the left container to the application frame
+		leftContainer.add(Box.createVerticalGlue());
 		frame.add(leftContainer, BorderLayout.WEST);
 
 		// Setup the main clothing image area
@@ -144,7 +143,10 @@ class View {
 		centerContainer.add(editing, BorderLayout.CENTER);
 
 		// Add the color slider on the bottom of the screen
-		colorSlider = new JSlider(JSlider.HORIZONTAL, 0, 4, 2);
+		int startIndex = 0;
+		int endIndex = 4;
+		int initPosition = 2;
+		colorSlider = new JSlider(JSlider.HORIZONTAL, startIndex, endIndex, initPosition);
 		colorSlider.setSnapToTicks(true);
 		colorSlider.setPaintTicks(true);
 		colorSlider.setPaintLabels(true);
@@ -161,24 +163,23 @@ class View {
 		labelTable.put( new Integer( 4 ), new JLabel("yellow") );
 		colorSlider.setLabelTable( labelTable );
 
+		// Add center container to the main application frame
 		frame.add(centerContainer);
 
-		// Setup the clothing icon area
-
+		// Setup the clothing icon area with a right container
 		JPanel rightContainer = new JPanel();
 		layout = new BoxLayout(rightContainer, BoxLayout.Y_AXIS);
-		rightContainer.setLayout(layout);
-
-		rightContainer.add(Box.createVerticalGlue());
-
-		rightContainer.add(this.otherStyle1);
-		rightContainer.add(Box.createRigidArea(new Dimension(0, 31)));
-		rightContainer.add(this.otherStyle2);
-
-		rightContainer.add(Box.createVerticalGlue());
-
 		rightContainer.setBackground(Color.BLACK);
+		rightContainer.setLayout(layout);
+		rightContainer.add(Box.createVerticalGlue());
 
+		// Add the shirt icons with spacing in between
+		rightContainer.add(newWidenedPanel(otherStyle1));
+		rightContainer.add(Box.createRigidArea(new Dimension(0, 42)));
+		rightContainer.add(newWidenedPanel(otherStyle2));
+
+		// Add the right container to the GUI
+		rightContainer.add(Box.createVerticalGlue());
 		frame.add(rightContainer, BorderLayout.EAST);
 
 		// Pack and show the main frame
@@ -188,6 +189,26 @@ class View {
 
 	public void update() {
 		frame.pack();
+	}
+
+	public JPanel newWidenedPanel(JButton button) {
+		// Create the panel with a horizontal layout
+		JPanel panel = new JPanel();
+		BoxLayout layout = new BoxLayout(panel, BoxLayout.X_AXIS);
+		panel.setLayout(layout);
+
+		int width = 30;
+		int height = 0;
+
+		// Add the button with rigid area on both sides
+		panel.add(Box.createRigidArea(new Dimension(width, height)));
+		panel.add(button);
+		panel.add(Box.createRigidArea(new Dimension(width, height)));
+
+		// Set the background color to black
+		panel.setBackground(Color.BLACK);
+
+		return panel;
 	}
 
 	public JPanel newSelectorPanel(
@@ -223,6 +244,8 @@ class View {
 		// Create the text label
 		JLabel fabricLabel = new JLabel(text, SwingConstants.CENTER);
 		fabricLabel.setForeground(Color.WHITE);
+		float newSize = 20;
+		fabricLabel.setFont(fabricLabel.getFont().deriveFont(newSize));
 
 		// Create the panel to hold the text
 		JPanel panel = new JPanel();

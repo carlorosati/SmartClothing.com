@@ -1,32 +1,46 @@
 package gui;
 
 import javax.swing.ImageIcon;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
-/**
- * Source: stackoverflow.com
- * Title: Create a ImageIcon that is the mirror of another one
- * URL: http://stackoverflow.com/questions/1708011/create-a-imageicon-that-is-the-mirror-of-another-one
- */
 class MirrorImageIcon extends ImageIcon {
 	
-	public MirrorImageIcon(String fileName) {
-		super(fileName);
-		// I don't have time to fix this now, but when the mouse is held
-		// down on the image, it doesn't show the flipped image. I think this 
-		// is b/c the paintIcon isn't called until the mouse is released. To
-		// fix this I would flip the image in the constructor. idk how 2 do that	
-		// Image i = super.getImage();
-		// Graphics2D g2 = new Graphics2D();
-	}
+	public MirrorImageIcon(String filePath) {
 
-	@Override
-	public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
-		Graphics2D g2 = (Graphics2D) g.create();
-		g2.translate(getIconWidth(), 0);
-		g2.scale(-1, 1);
-		super.paintIcon(c, g2, x, y);
+		// Call parent class default constructor
+		super();
+
+		BufferedImage bufferedImage = null;
+
+		try
+		{
+			// Attempt to read in the image file
+			bufferedImage = ImageIO.read(new File(filePath));
+
+			// Flip the buffered image over the y-axis
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+
+			// First translate the image over the y-axis
+			tx.translate(-bufferedImage.getWidth(null), 0);
+			AffineTransformOp op = new AffineTransformOp(
+				tx,
+				AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+
+			// Perform the transformation
+			bufferedImage = op.filter(bufferedImage, null);
+
+			// Set the image of the super class to the mirrored image
+			super.setImage(bufferedImage);
+		}
+		catch (IOException e)
+		{
+			System.out.println("Exception " + e);
+			e.printStackTrace();
+		}
 	}
 }
