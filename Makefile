@@ -7,7 +7,7 @@ TARGET=Controller
 # java -classpath $(OUTDIR) package.Classname
 
 compile:
-	mkdir -p $(OUTDIR)
+	@mkdir -p $(OUTDIR)
 	javac -d $(OUTDIR) -cp $(OUTDIR) -sourcepath $(SRCDIR) src/$(PKGNAME)/*.java
 
 run: compile
