@@ -1,0 +1,25 @@
+SmartClothing.com
+---
+Final Project – CS 338: Graphical User Interfaces
+Carlo Rosati
+
+-- How to run --
+
+Step 1: Navigate to project directory in terminal
+
+Step 2: Issue/Execute the following command:
+
+make run
+
+
+-- Dependencies --
+
+- Java Platform (JDK)
+
+- GNU make
+
+
+~~
+
+Have fun!
+
