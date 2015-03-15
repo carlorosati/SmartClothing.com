@@ -23,3 +23,13 @@ make run
 
 Have fun!
 
+-- Goals --
+
+This project is a window with buttons to customize 3 different styles of Men's
+shirts. The future goals would be to add pants, as well as women's clothing,
+including dresses.
+
+This particular implementation/demo is of the modal window that would appear
+on the website if a user chooses to customize a particular design from the
+"browse" page. This window would save the changes to the browse page on close,
+where the user can choose to purchase.
